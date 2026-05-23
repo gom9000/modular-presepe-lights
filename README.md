@@ -1,5 +1,5 @@
 # Modular Presepe Lights
-**Type**: Modular Lighting / Project | **Status**: Completed
+**Type**: Standalone Project | **Status**: Completed
 
 A set of simple modular, low-current, lighting controllers designed for the presepe lighting. 
 
