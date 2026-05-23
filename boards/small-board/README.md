@@ -1,8 +1,9 @@
 # *Small* Board
-Configurable board with 1 intermittence module capable of drive 2 LED-strings.
-The light intensity can be varied via trimmers T2/T3,
-and the period of intermittence can be varied using the T1 trimmer, between about 5 and 20 seconds.
-The intermittence module can be plugged to none, one or both the drivers via J1/J2 jumpers.
+**Parent Project**: [Modular Presepe Lights](../)
+
+A configurable hardware board featuring **1 Intermittence Module** capable of driving **2 independent LED strings**. 
+
+The flash period can be adjusted between approximately 5 and 20 seconds via trimmer `T1`. The individual light intensity of each string can be tuned using trimmers `T2` and `T3`. Through jumpers `J1` and `J2`, the intermittence oscillation can be selectively applied to none, one, or both of the LED driver channels.
 
 ![board-built](small-board_built.jpg)
 
@@ -16,17 +17,24 @@ The intermittence module can be plugged to none, one or both the drivers via J1/
 
 
 ## Bill of Materials
-- [x] paperboard 3x7cm (10x24 holes)
-- [x] 1 x IC 555 timer
-- [x] 2 x IC LM317 3-terminal adjustable regulator
-- [x] 2 x 47Kohm resistors 1/4 watt
-- [x] 2 x 51ohm resistors 1/4 watt
-- [x] 2 x 1Kohm trimmers
-- [x] 1 x 220Kohm trimmers
-- [x] 47uF electrolytic capacitor 25V
-- [x] 10uF electrolytic capacitor 25V
-- [x] 1 x 100nF capacitor 25V
-- [x] 1 x 10nF capacitor 25V
-- [x] DC male power connector 2.1mm
-- [x] 2-pin screw terminal block 5mm
-- [x] 2-pin header
+### Prototyping & Connectors
+- [x] 1 x Perfboard 3x7cm (10x24 holes)
+- [x] 1 x DC Barrel Jack (PCB mount, 2.1mm)
+- [x] 2 x 2-pin Screw Terminal Blocks (5mm pitch, for LED outputs)
+- [x] 1 x 3-pin Male Header array (or 2-pin arrays for jumper selection)
+
+### Integrated Circuits (ICs)
+- [x] 1 x NE555 Timer IC (with socket)
+- [x] 2 x LM317L 3-terminal adjustable linear regulators (TO-92 package)
+
+### Resistors & Trimmers (1/4W, Standard Grade)
+- [x] 2 x $47k\Omega$ resistors
+- [x] 2 x $51\Omega$ resistors
+- [x] 1 x $220k\Omega$ trimmer (for frequency tuning)
+- [x] 2 x $1k\Omega$ trimmers (for LED intensity)
+
+### Capacitors (25V rated or higher)
+- [x] 1 x $47\mu F$ electrolytic capacitor
+- [x] 1 x $10\mu F$ electrolytic capacitor
+- [x] 1 x $100nF$ radial multilayer ceramic capacitor
+- [x] 1 x $10nF$ polyester film (Mylar) capacitor

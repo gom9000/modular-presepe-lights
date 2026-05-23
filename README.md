@@ -1,82 +1,82 @@
 # Modular Presepe Lights
-A set of simple modular circuits for the lighting of the presepe.
+**Type**: Modular Lighting / Project | **Status**: Completed
 
-The idea is to make a very simple lights controller, with a modular approach depending on the needs, to drive low-current (and short) LED strings, with an external supply voltage between 12 and 15 VDC.
+A set of simple modular, low-current, lighting controllers designed for the presepe lighting. 
+
+The system drives small LED strings using linear and analog blocks powered by an external $12VDC$ to $15VDC$ supply.
+The modular architecture allows cells to be combined depending on the specific scenic requirements (e.g., steady light, flickering fire, or blinking stars).
 
 ![overview](resources/overview.jpg)
 
+
+## Specifications
+* **Input Voltage:** $12VDC$ to $15VDC$ (external DC adapter).
+* **Architecture:** Modular blocks (Drivers, Oscillators, LED Strings).
+* **Max Load:** Designed for low-current, short LED strings (typically up to 4–5 LEDs per string, depending on total forward voltage drop).
 
 
 ## Modules
 
 ### LED Driver Module
-Is the only mandatory module, implemented with a LM317 configured as a constant current source.
-This simple configuration is capable to drive a LED string that has a drop voltage of less than $Vin$ minus a few volts.
+* **Role:** Constant Current Source (Mandatory block).
+* **Implementation:** Built around a classic LM317 linear regulator. It is able to drive a LED string that has a total voltage drop of less than $V_{in}$ minus the regulator's dropout voltage.
 
 ![image](resources/led-driver-module-schematic.jpg)
 
-The output current of this circuit is:
+The regulated output current is defined by:
 
-$$ I_{out} = 1.25/R_{s} $$
+$$I_{out} = \frac{1.25}{R_s}$$
 
 
 ### Intermittence Module
-A variable frequency astable multivibrator that acts as intermittence, implemented with a 555 timer.
+* **Role:** Square-wave low-frequency oscillator for blinking effects.
+* **Implementation:** A standard NE555 timer configured as an astable multivibrator. It delivers a rectangular voltage output of approximately $V_{out} \approx V_{cc} - 1.5V$.
 
 ![image](resources/intermittence-module-schematic.jpg)
 
-A rectangular voltage signal of approximately $Vout = Vcc-1.5V$ is obtained as output.
-<br/>
-Circuit timing equations are:
+The timing parameters are defined by:
 
-$$ period = 0,69*(R_{1} + 2R_{2})*C $$
+$$period = 0.69 \cdot (R_1 + 2R_2) \cdot C$$
 
-$$ dutycycle = \large\frac{R_{1} + R_{2}}{R_{1} + 2R_{2}} $$
+$$duty\_cycle = \frac{R_1 + R_2}{R_1 + 2R_2}$$
 
 
 ### Firelight Module
-A fixed frequency astable multivibrator "disturbed" by a simple relaxaction oscillator, to emulate the irregular tremolo of firelight.
+* **Role:** Irregular flickering effect to simulate real flame or embers.
+* **Implementation:** A fixed-frequency astable multivibrator "disturbed" by a secondary, simple relaxation oscillator. The interaction between the two asymmetric wave frequencies creates a realistic, pseudo-random tremolo effect.
 
 ![image](resources/firelight-module-schematic.jpg)
 
 
 ### Starlight Module
-The same circuit of the firelight module, but with a slightly faster frequency.
+* **Role:** Shimmering stars effect.
+* **Implementation:** Uses the exact same chaotic dual-oscillator topology as the *Firelight Module*, but tuned with a slightly higher frequency to mimic distant starlight scintillation.
 
 
 ### LED string Module
-A series of max 4 or 5 small-current LEDs. The maximum drop voltage must be less than $V_{out}$ minus a few volts.
+* **Role:** Light emitter arrays (up to 4–5 small-current LEDs in series).
+* **Implementation:** The total cumulative forward voltage drop ($V_f$) of the string must remain lower than the driver's available $V_{out}$.
 
 ![image](resources/led-string-module-schematic.jpg)
 
-Typical (but very very indicative) LED voltage drop, based on color, are:
-
-$$ red \sim (1.6 - 2.0)V $$
-
-$$ orange \sim 2.0V $$
-
-$$ yellow \sim 2.0V $$
-
-$$ green \sim (1.9 - 4.0)V $$
-
-$$ blu \sim (2.5 - 3.7)V $$
-
-$$ white \sim (3.2 - 4.0)V $$
+Typical, but very very indicative, forward voltage drops ($V_f$) across standard LED colors are:
+* **Red:** $\sim 1.6\text{V} - 2.0\text{V}$
+* **Orange / Yellow:** $\sim 2.0\text{V}$
+* **Green:** $\sim 1.9\text{V} - 4.0\text{V}$
+* **Blue:** $\sim 2.5\text{V} - 3.7\text{V}$
+* **White:** $\sim 3.2\text{V} - 4.0\text{V}$
 
 
+## Hardware Form Factors (Boards)
+The modular blocks are deployed across three physical board layouts, depending on the complexity of the scenery:
 
-## Boards
-- [Tiny Board](boards/tiny-board) implements a single line configurable intermittence board.
-- [Small Board](boards/small-board) implements a configurable board with 1 intermittence module capable of drive 2 LED-strings.
-- [Medium Board](boards/medium-board) implements a configurable board with 3 intermittence modules capable of drive 5 LED-strings, plus a firelight set.
+* **[Tiny Board](boards/tiny-board):** Implements a compact, single-line, configurable intermittence board.
+* **[Small Board](boards/small-board):** A configurable board featuring 1 Intermittence Module capable of driving 2 independent LED strings.
+* **[Medium Board](boards/medium-board):** A complete controller housing 3 Intermittence Modules (up to 5 LED strings per module) plus a dedicated Firelight generator.
 
 
 
-## About
-Author : Alessandro Fraschetti (mail: [gos95@gommagomma.net](mailto:gos95@gommagomma.net))
-
-
-
-## Licence
-The [MIT license](LICENSE) posted in the main repository directory is applied to all the stuff.
-You are free to use them for any purpose, just try to give credit in the documentation of your project.
+## About & License
+**Author:** Alessandro Fraschetti (gom9000).  
+**Technical Notes:** All hardware design, schematics, and layouts were developed using the free **ExpressPCB** CAD suite, supported by the custom **[expresspcb-goslib](https://github.com/gom9000/expresspcb-goslib)** asset library.  
+**License:** This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute it. Credit in your derivative documentation is highly appreciated.
