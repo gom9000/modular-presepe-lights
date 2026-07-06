@@ -27,6 +27,14 @@ The regulated output current is defined by:
 
 $$I_{out} = \frac{1.25}{R_s}$$
 
+Standard low-current LEDs typically operate optimally within a current range of $2mA$ to $20mA$. In the board implementations, $R_s$ is realized using a fixed $51\ \Omega$ safety resistor in series with a $1\text{ k}\Omega$ tuning trimmer to safely clamp the maximum current and allow continuous brightness adjustment.
+
+In the worst-case operating scenario, with a maximum supply voltage of $V_{in} = 15\text{V}$, a single red LED ($V_f \approx 2\text{V}$), and the driver tuned to $I_{out} = 20\text{ mA}$, the power dissipation ($P_{LM317}$) and the resulting junction temperature ($T_j$) of the regulator in a TO-92 package ($\theta_{ja} = 160^\circ\text{C/W}$) are calculated as follows:
+
+$$P_{LM317} = (V_{in} - 1.25\text{V} - V_f) \cdot I_{out} = (15\text{V} - 1.25\text{V} - 2\text{V}) \cdot 0.02\text{A} = 235\text{ mW}$$
+
+$$T_j = T_a + (P_{LM317} \cdot \theta_{ja}) = 25^\circ\text{C} + 0.235\text{W} \cdot 160^\circ\text{C/W} \approx 63^\circ\text{C}$$
+
 
 ### Intermittence Module
 * **Role:** Square-wave low-frequency oscillator for blinking effects.
@@ -40,6 +48,9 @@ $$period = 0.69 \cdot (R_1 + 2R_2) \cdot C$$
 
 $$duty\_cycle = \frac{R_1 + R_2}{R_1 + 2R_2}$$
 
+In the board implementations: $R_1 = 47K\Omega$, $R_2 = 47K\Omega \text{ (fixed)} + 220K\Omega \text{ (trimmer)}$ and $C_1 = 47\mu F$.
+This specific dimensioning yields a tuning window of $\sim 5$ to $20$ seconds per complete cycle, while keeping the duty cycle close to a symmetrical look ($\sim 50\% - 60\%$) across the entire adjustment range.
+
 
 ### Firelight Module
 * **Role:** Irregular flickering effect to simulate real flame or embers.
@@ -47,6 +58,7 @@ $$duty\_cycle = \frac{R_1 + R_2}{R_1 + 2R_2}$$
 
 ![image](resources/firelight-module-schematic.jpg)
 
+In the board implementations, resistors and capacitors components are sized to run the multivibrator at a baseline frequency of $\sim 10\text{ Hz}$. The secondary oscillator generates a much slower relaxation curve running above $1\text{ Hz}$.
 
 ### Starlight Module
 * **Role:** Shimmering stars effect.
@@ -60,7 +72,7 @@ $$duty\_cycle = \frac{R_1 + R_2}{R_1 + 2R_2}$$
 ![image](resources/led-string-module-schematic.jpg)
 
 Typical, but very very indicative, forward voltage drops ($V_f$) across standard LED colors are:
-* **Red:** $\sim 1.6\text{V} - 2.0\text{V}$
+* **Red:** $\sim 1.8\text{V} - 2.0\text{V}$
 * **Orange / Yellow:** $\sim 2.0\text{V}$
 * **Green:** $\sim 1.9\text{V} - 4.0\text{V}$
 * **Blue:** $\sim 2.5\text{V} - 3.7\text{V}$
@@ -72,7 +84,7 @@ The modular blocks are deployed across three physical board layouts, depending o
 
 * **[Tiny Board](boards/tiny-board):** Implements a compact, single-line, configurable intermittence board.
 * **[Small Board](boards/small-board):** A configurable board featuring 1 Intermittence Module capable of driving 2 independent LED strings.
-* **[Medium Board](boards/medium-board):** A complete controller housing 3 Intermittence Modules (up to 5 LED strings per module) plus a dedicated Firelight generator.
+* **[Medium Board](boards/medium-board):** A complete controller housing 3 Intermittence Modules capable of driving up to 5 independent LED strings, plus a dedicated Firelight generator.
 
 
 
