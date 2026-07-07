@@ -29,11 +29,16 @@ $$I_{out} = \frac{1.25}{R_s}$$
 
 Standard low-current LEDs typically operate optimally within a current range of $2mA$ to $20mA$. In the board implementations, $R_s$ is realized using a fixed $51\ \Omega$ safety resistor in series with a $1\text{ k}\Omega$ tuning trimmer to safely clamp the maximum current and allow continuous brightness adjustment.
 
-In the worst-case operating scenario, with a maximum supply voltage of $V_{in} = 15\text{V}$, a single red LED ($V_f \approx 2\text{V}$), and the driver tuned to $I_{out} = 20\text{ mA}$, the power dissipation ($P_{LM317}$) and the resulting junction temperature ($T_j$) of the regulator in a TO-92 package ($\theta_{ja} = 160^\circ\text{C/W}$) are calculated as follows:
+In the worst-case operating scenario, with a maximum supply voltage of $V_{in} = 15\text{V}$, a single red LED ($V_f \approx 2\text{V}$), and the driver tuned to $I_{out} = 20\text{ mA}$, the power dissipation ($P_{LM317}$) and the resulting junction temperature ($T_j$) and case temperature ($T_c$) of the regulator in a TO-92 package ($\theta_{ja} = 160^\circ\text{C/W}$, $\theta_{jc} = 80^\circ\text{C/W}$) are calculated as follows:
 
 $$P_{LM317} = (V_{in} - 1.25\text{V} - V_f) \cdot I_{out} = (15\text{V} - 1.25\text{V} - 2\text{V}) \cdot 0.02\text{A} = 235\text{ mW}$$
 
 $$T_j = T_a + (P_{LM317} \cdot \theta_{ja}) = 25^\circ\text{C} + 0.235\text{W} \cdot 160^\circ\text{C/W} \approx 63^\circ\text{C}$$
+
+$$T_c = T_a + (P_{LM317} \cdot \theta_{jc}) = 25^\circ\text{C} + 0.235\text{W} \cdot 80^\circ\text{C/W} \approx 45^\circ\text{C}$$
+
+#### Test Validation
+To validate the thermal behavior under continuous operation, a stress test was performed on tiny board, with $V_{in} = 15\text{V}$, a single LED ($V_f = 2.2\text{V}$), and the driver tuned to max $I_{out} = 24.3\text{ mA}$ ($P_{LM317} \approx 0.28\text{ W}$). After 20 minutes, the TO-92 plastic body reached a stable thermal equilibrium at **$53^\circ\text{C}$** (at room temperature $\sim 27^\circ\text{C}$).
 
 
 ### Intermittence Module
